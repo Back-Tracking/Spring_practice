@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -46,7 +47,12 @@ public class BoardServiceTests {
 	@Test
 	public void testGetAllArticles() {
 		
-		service.getAllArticle().forEach(board -> log.info(board));
+		Criteria cri = new Criteria();
+		//pageNum, amount 設定
+		cri.setPageNum(1);
+		cri.setAmount(10);
+		
+		service.getAllArticle(cri).forEach(board -> log.info(board));
 	}
 	
 	@Test

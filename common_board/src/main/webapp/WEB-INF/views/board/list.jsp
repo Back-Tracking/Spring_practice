@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>SB Admin 2 - Articles</title>
 
     <!-- Custom fonts for this template -->
     <link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -138,7 +138,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Articles</span></a>
             </li>
 
             <!-- Divider -->
@@ -401,7 +401,35 @@
 											</tr>
 										</c:forEach>
                                     </tbody>
-                                </table>
+                                </table>								
+								<div class='pull-right'>
+									<ul class="pagination">
+										
+										<c:if test="${pageMaker.prev}">
+											<li class="paginate_button previous">
+												<a href="${pageMaker.startPage - 1}">Previous</a>
+											</li>
+										</c:if>
+										
+										<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+											<li class="paginate_button btn btn-default ${pageMaker.cri.pageNum == num ? "active" : "" }">
+												<a href="${num}">${num}</a>
+												<form id="actionForm" action="/board/list" method="get">
+													<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
+													<input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
+												</form>
+											</li>
+										</c:forEach>
+										
+										<c:if test="${pageMaker.next}">
+											<li class="paginate_button next">
+												<a href="${pageMaker.endPage + 1}">Next</a>
+											</li>
+										</c:if>
+										
+									</ul>
+								</div>
+								<!-- end of Pagination -->
                             </div>
                         </div>
                     </div>
@@ -506,6 +534,15 @@
     			
     			$("#registModal").modal("show");
     		}
+    		
+    		$(".paginate_button a").on("click", function(e) {
+    			e.preventDefault();
+    			
+    			console.log("click");
+    			
+    			$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
+    			$("#actionForm").submit();
+    		});
     	});
     </script>
 
