@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 public interface BoardServiceImpl {
 
@@ -42,5 +43,5 @@ public interface BoardServiceImpl {
    * 全体記事のオブジェクトを取得する
    * @return List<BoardVO> 記事リスト
    */
-	public List<BoardVO> getAllArticle();
+	public List<BoardVO> getAllArticle(Criteria cri);
 }

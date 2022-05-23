@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 import org.zerock.persistence.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -56,14 +57,19 @@ public class BoardService implements BoardServiceImpl {
 	}
 
 	@Override
-	public List<BoardVO> getAllArticle() {
+	public List<BoardVO> getAllArticle(Criteria cri) {
 		// TODO Auto-generated method stub
 		
+		/* ページング無しのSQL
 		log.info("全体記事を取得します。");
 		
 		List<BoardVO> articles = mapper.getList();
+		*/
 		
-		return articles;
+		// ページング有りのSQL
+		log.info("ページングデータを用いて記事リストを取得します。criteria : " + cri);
+		
+		return mapper.getListWithPaging(cri);
 	}
 
 }
