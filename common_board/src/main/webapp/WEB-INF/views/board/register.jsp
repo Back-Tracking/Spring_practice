@@ -137,7 +137,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Articles</span></a>
             </li>
 
             <!-- Divider -->

@@ -3,6 +3,7 @@ package org.zerock.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,10 +26,13 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
+		
+		// 全体記事の数を取得、ページングに反映
+		int pageCount = service.getArticlesCount();
 
 		log.info("list");
 		model.addAttribute("list", service.getAllArticle(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri, 27));
+		model.addAttribute("pageMaker", new PageDTO(cri, pageCount));
 	}
 	
 	// GET方式でアクセスした場合
@@ -52,32 +56,39 @@ public class BoardController {
 	}
 	
 	@GetMapping({"/read", "/modify"})
-	public void readOrModify(@RequestParam("bno") Long bno, Model model) {
+	public void readOrModify(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
 		
 		log.info("/read or /modify");
 		model.addAttribute("board", service.getArticle(bno));
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 
 		log.info("modify: " + board);
 		
 		if (service.modifyArticle(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		
+		rttr.addFlashAttribute("pageNum", cri.getPageNum());
+		rttr.addFlashAttribute("amount", cri.getAmount());
 
 		return "redirect:/board/list";
 	}
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 
 		log.info("remove: " + bno);
 		
 		if (service.removeArticle(bno)) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		
+		rttr.addFlashAttribute("pageNum", cri.getPageNum());
+		rttr.addFlashAttribute("amount", cri.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	

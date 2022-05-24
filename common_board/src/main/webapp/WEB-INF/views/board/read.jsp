@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>SB Admin 2 - Read</title>
 
     <!-- Custom fonts for this template -->
     <link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -137,7 +137,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Articles</span></a>
             </li>
 
             <!-- Divider -->
@@ -364,12 +364,18 @@
                    					<input class="form-control" name="writer" value='<c:out value="${board.writer}"/>' readonly></input>
                    				</div>
                    				
-                   				<button data-oper="modify" class="btn btn-default">
-                   					<a href="/board/modify?bno=<c:out value="${board.bno}"/>">Modify</a>
-                   				</button>
-                   				<button data-oper="list" class="btn btn-default">
-                   					<a href="/board/list">List</a>
-                   				</button>
+                   				<form id="operForm" action="/board/modify" method="get">
+	                   				<button data-oper="modify" class="btn btn-default">
+	                   					<a href="/board/modify?bno=<c:out value="${board.bno}"/>">Modify</a>
+	                   				</button>
+	                   				<button data-oper="list" class="btn btn-default">
+	                   					<a href="/board/list">List</a>
+	                   				</button>
+	                   				
+	                   				<input type="hidden" id="bno" name="bno" value='<c:out value="${board.bno}"/>'/>
+	                   				<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
+	                   				<input type="hidden" name="amount"  value='<c:out value="${cri.amount}"/>'/>
+	                   			</form>
                     		</div>
                     	</div>
                     </div>
@@ -438,6 +444,25 @@
     <!-- Page level custom scripts -->
     <script src="/resources/js/demo/datatables-demo.js"></script>
 
-
+	<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var operForm = $("#operForm");
+		
+		$("button[data-oper='modify']").on("click", function(e) {
+			e.preventDefault();
+			
+			operForm.attr("action", "/board/modify").submit();
+		});
+		
+		$("button[data-oper='list']").on("click", function(e) {
+			e.preventDefault();
+			
+			operForm.find("#bno").remove();
+			operForm.attr("action", "/board/list");
+			operForm.submit();
+		});
+	});
+	</script>
 </body>
 </html>

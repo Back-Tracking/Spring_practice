@@ -393,8 +393,8 @@
                                     <tbody>
 										<c:forEach items="${list}" var="board">
 											<tr>
-												<td><a href='/board/read?bno=<c:out value="${board.bno}"/>'><c:out value="${board.bno}"/></a></td>
-												<td><c:out value="${board.title}"/></td>
+												<td><c:out value="${board.bno}"/></td>
+												<td><a class="move" href='<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td>
 												<td><c:out value="${board.writer}"/></td>
 												<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/></td>
 												<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}"/></td>
@@ -538,9 +538,19 @@
     		$(".paginate_button a").on("click", function(e) {
     			e.preventDefault();
     			
-    			console.log("click");
+    			console.log("page link click");
     			
     			$("#actionForm").find("input[name='pageNum']").val($(this).attr("href"));
+    			$("#actionForm").submit();
+    		});
+    		
+    		$(".move").on("click", function(e) {
+    			e.preventDefault();
+    			
+    			console.log("article read click");
+    			
+    			$("#actionForm").append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+    			$("#actionForm").attr("action", "/board/read");
     			$("#actionForm").submit();
     		});
     	});

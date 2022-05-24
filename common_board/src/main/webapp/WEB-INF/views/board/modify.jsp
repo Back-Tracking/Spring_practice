@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>SB Admin 2 - Modify</title>
 
     <!-- Custom fonts for this template -->
     <link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -137,7 +137,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Articles</span></a>
             </li>
 
             <!-- Divider -->
@@ -374,6 +374,10 @@
 	                   				<button type="submit" data-oper="list" class="btn btn-default">
 	                   					List
 	                   				</button>
+	                   				
+	                   				<!-- Paging Param -->
+	                   				<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
+	                   				<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
                    				</form>
                     		</div>
                     	</div>
@@ -458,7 +462,12 @@
     				formObj.attr("action", "/board/remove");
     			} else if (operation === "list") {
     				formObj.attr("action", "/board/list").attr("method", "get");
+    				var pageNumTag = $("input[name='pageNum']").clone();
+    				var amountTag  = $("input[name='amount']").clone();
+    				
     				formObj.empty();
+    				formObj.append(pageNumTag);
+    				formObj.append(amountTag);
     			}
     			formObj.submit();
     		})
