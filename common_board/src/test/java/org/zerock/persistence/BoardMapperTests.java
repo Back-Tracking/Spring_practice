@@ -98,6 +98,7 @@ public class BoardMapperTests {
 	}
 	*/
 	
+	/*
 	@Test
 	public void testPaging() {
 		
@@ -105,6 +106,19 @@ public class BoardMapperTests {
 		//pageNum, amount 設定
 		cri.setPageNum(1);
 		cri.setAmount(10);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info(board));
+	}
+	*/
+	
+	@Test
+	public void testSearch() {
+		
+		Criteria cri = new Criteria();
+		cri.setKeyword("modal");
+		cri.setType("T");
 		
 		List<BoardVO> list = mapper.getListWithPaging(cri);
 		

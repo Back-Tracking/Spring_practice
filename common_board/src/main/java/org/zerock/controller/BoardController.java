@@ -71,10 +71,14 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		rttr.addFlashAttribute("type", cri.getType());
+		rttr.addFlashAttribute("keyword", cri.getKeyword());
 		rttr.addFlashAttribute("pageNum", cri.getPageNum());
 		rttr.addFlashAttribute("amount", cri.getAmount());
 
 		return "redirect:/board/list";
+		
+		// return "redirect:/board/list" + cri.getListLink();
 	}
 	
 	@PostMapping("/remove")
@@ -86,10 +90,14 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
+		rttr.addFlashAttribute("type", cri.getType());
+		rttr.addFlashAttribute("keyword", cri.getKeyword());
 		rttr.addFlashAttribute("pageNum", cri.getPageNum());
 		rttr.addFlashAttribute("amount", cri.getAmount());
 		
 		return "redirect:/board/list";
+		
+		// return "redirect:/board/list" + cri.getListLink();
 	}
 	
 }
