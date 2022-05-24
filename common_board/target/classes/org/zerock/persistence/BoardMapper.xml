@@ -30,6 +30,15 @@
  	]]> 	
  	</select>
  	
+ 	<select id="getArticlesCount" resultType="int">
+ 		SELECT 
+ 			COUNT(bno)
+ 		FROM
+ 			tbl_board
+ 		WHERE
+ 			bno > 0
+ 	</select>
+ 	
  	<insert id="insertArticle">
  		insert into tbl_board (bno, title, content, writer)
  		values (seq_board.nextval, #{title}, #{content}, #{writer})

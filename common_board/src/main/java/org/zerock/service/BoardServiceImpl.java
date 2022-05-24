@@ -40,8 +40,15 @@ public interface BoardServiceImpl {
 	
   /**
    * 記事リスト取得メソッド
-   * 全体記事のオブジェクトを取得する
+   * ページングを適用した記事のオブジェクトを取得する
    * @return List<BoardVO> 記事リスト
    */
 	public List<BoardVO> getAllArticle(Criteria cri);
+	
+  /**
+   * 記事数取得メソッド
+   * 全体記事の数を取得する
+   * @return List<BoardVO> 記事リスト
+   */
+	public int getArticlesCount();
 }

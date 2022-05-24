@@ -72,4 +72,12 @@ public class BoardService implements BoardServiceImpl {
 		return mapper.getListWithPaging(cri);
 	}
 
+	@Override
+	public int getArticlesCount() {
+		// TODO Auto-generated method stub
+		
+		log.info("全体記事の数を取得します。");
+		
+		return mapper.getArticlesCount();
+	}
 }
