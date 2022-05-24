@@ -401,7 +401,30 @@
 											</tr>
 										</c:forEach>
                                     </tbody>
-                                </table>								
+                                </table>
+                                <!-- Search Bar -->
+                                <div class='row'>
+                                	<div class="col-lg-12">
+                                		<form id="searchForm" action="/board/list" method="get">
+                                			<select name='type'>
+                                				<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>オプションを選択してください。</option>
+                                				<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}"/>>タイトル</option>
+                                				<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}"/>>コンテンツ</option>
+                                				<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>作成者</option>
+                                				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}"/>>タイトル or コンテンツ</option>
+                                				<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}"/>>タイトル or 作成者</option>
+                                				<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}"/>>タイトル or コンテンツ or 作成者</option>
+                                			</select>
+                                			<input type='text' name='keyword' value='${pageMaker.cri.keyword}' />
+                                			<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'/>
+                                			<input type='hidden' name='amount' value='${pageMaker.cri.amount}'/>
+                                			<button class='btn btn-default'>Search</button>
+                                		</form>
+                                	</div>
+                                </div>
+                                <!-- End Of Search Bar -->
+                                
+                                <!-- Pagination -->								
 								<div class='pull-right'>
 									<ul class="pagination">
 										
@@ -415,8 +438,10 @@
 											<li class="paginate_button btn btn-default ${pageMaker.cri.pageNum == num ? "active" : "" }">
 												<a href="${num}">${num}</a>
 												<form id="actionForm" action="/board/list" method="get">
+													<input type="hidden" name="type"    value="${pageMaker.cri.type}"/>
+													<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"/>
 													<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
-													<input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
+													<input type="hidden" name="amount"  value="${pageMaker.cri.amount}"/>
 												</form>
 											</li>
 										</c:forEach>
@@ -429,7 +454,7 @@
 										
 									</ul>
 								</div>
-								<!-- end of Pagination -->
+								<!-- End Of Pagination -->
                             </div>
                         </div>
                     </div>
@@ -518,7 +543,11 @@
     
     <script type="text/javascript">
     	$(document).ready(function(){
+    		// 処理結果
     		var result = '<c:out value="${result}"/>';
+    		
+    		// 検索Form
+    		var searchForm = $("#searchForm");
     		
     		checkModal(result);
     		
@@ -552,6 +581,24 @@
     			$("#actionForm").append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
     			$("#actionForm").attr("action", "/board/read");
     			$("#actionForm").submit();
+    		});
+    		
+    		$("#searchForm button").on("click", function(e){
+    			
+    			if(!searchForm.find("option:selected").val()){
+    				alert("検索オプションを選択してください。");
+    				return false;
+    			}
+    			
+    			if(!searchForm.find("input[name='keyword']").val()){
+    				alert("キーワードを入力してください。");
+    				return false;
+    			}
+    			
+    			searchForm.find("input[name='pageNum']").val("1");
+    			e.preventDefault();
+    			
+    			searchForm.submit();
     		});
     	});
     </script>
