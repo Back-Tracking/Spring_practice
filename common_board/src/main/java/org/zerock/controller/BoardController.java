@@ -1,5 +1,7 @@
 package org.zerock.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,7 @@ public class BoardController {
 	
 	// GET方式でアクセスした場合
 	@GetMapping("/register")
+	@PreAuthorize("isAuthenticated()")
 	public void register() {
 		
 		log.info("register");
@@ -44,6 +47,7 @@ public class BoardController {
 	
 	// POST方式でアクセスした場合
 	@PostMapping("/register")
+	@PreAuthorize("isAuthenticated()")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		
 		log.info("register: " + board);
